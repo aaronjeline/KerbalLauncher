@@ -1,17 +1,22 @@
 //Kerbal Space Launcher. Aaron Eline 2014
-//Based on: http://mitchtech.net/arduino-usb-hid-keyboard/
+//Keyboard implimination from: http://mitchtech.net/arduino-usb-hid-keyboard/
 
 uint8_t buf[8] = { 0 }; //Keyboard report buffer
+//Pin definitions
 const int launchKey = 13;
 const int led = 8;
 const int launchButton = 7;
 boolean doneLaunch;
+
 void setup()
 {
+  //Initialize Serial Communications for the keyboard
   Serial.begin(9600);
+  //Set up pins
   pinMode(launchKey, INPUT);
   pinMode(led, OUTPUT);
   pinMode(launchButton, INPUT);
+  //Setup state
   doneLaunch = false;
 }
 
@@ -19,18 +24,21 @@ void setup()
 
 void loop()
 {
+  //Setup switch detection
   int keyState;
   keyState = digitalRead(launchKey);
   int launchState;
   launchState = digitalRead(launchButton);
-  
+  //Turn on the LED if the key is turned
   if(keyState == LOW)
   {
     digitalWrite(led, HIGH);
   }else{
     digitalWrite(led, LOW);
   }
-  
+  /*Press spacebar if the button is pressed WHILE the key is turned
+   *We also want to make sure space is only pressed once,
+   *so check to make sure the button wasn't pressed last loop */
   if(launchState == LOW && doneLaunch == false && keyState == LOW)
   {
     sendKey(44); //Spacebar 
@@ -45,7 +53,7 @@ void loop()
   
 }
 
-//Keyboard Code
+//Keyboard Implimentation, see:http://mitchtech.net/arduino-usb-hid-keyboard/
   void sendKey(int keyNum){
     buf[2] = keyNum;
     Serial.write(buf, 8);
