@@ -6,7 +6,9 @@ uint8_t buf[8] = { 0 }; //Keyboard report buffer
 const int launchKey = 13;
 const int led = 8;
 const int launchButton = 7;
+const int rcsSwitch = 11;
 boolean doneLaunch;
+int rcsBit;
 
 void setup()
 {
@@ -18,17 +20,14 @@ void setup()
   pinMode(launchButton, INPUT);
   //Setup state
   doneLaunch = false;
+  rcsBit = 0;
 }
 
 
 
 void loop()
 {
-  //Setup switch detection
-  int keyState;
-  keyState = digitalRead(launchKey);
-  int launchState;
-  launchState = digitalRead(launchButton);
+  initState();
   //Turn on the LED if the key is turned
   if(keyState == LOW)
   {
@@ -52,6 +51,17 @@ void loop()
   
   
 }
+
+void initState(){
+  //Setup switch detection
+  int keyState;
+  keyState = digitalRead(launchKey);
+  int launchState;
+  launchState = digitalRead(launchButton);
+  int rcsState;
+  rcsState = digitalRead(rcsState);
+}
+
 
 //Keyboard Implimentation, see:http://mitchtech.net/arduino-usb-hid-keyboard/
   void sendKey(int keyNum){
