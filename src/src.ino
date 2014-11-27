@@ -18,16 +18,24 @@ void setup()
   pinMode(launchKey, INPUT);
   pinMode(led, OUTPUT);
   pinMode(launchButton, INPUT);
+  pinMode(rcsSwitch, INPUT);
   //Setup state
   doneLaunch = false;
-  rcsBit = 0;
+  
+  rcsBit = 1;
 }
 
 
 
 void loop()
 {
-  initState();
+  //Init switch state
+  int keyState;
+  keyState = digitalRead(launchKey);
+  int launchState;
+  launchState = digitalRead(launchButton);
+  int rcsState;
+  rcsState = digitalRead(rcsState);
   //Turn on the LED if the key is turned
   if(keyState == LOW)
   {
@@ -47,20 +55,16 @@ void loop()
     doneLaunch = false;
   }  
   
-  
-  
-  
+  if(rcsState == LOW && rcsBit == 1){
+    sendKey(21); //r
+    rcsBit = 0;
+  }else if (rcsState == HIGH && rcsBit == 0){
+    sendKey(21); //r
+    rcsBit = 1;
+  }
 }
 
-void initState(){
-  //Setup switch detection
-  int keyState;
-  keyState = digitalRead(launchKey);
-  int launchState;
-  launchState = digitalRead(launchButton);
-  int rcsState;
-  rcsState = digitalRead(rcsState);
-}
+
 
 
 //Keyboard Implimentation, see:http://mitchtech.net/arduino-usb-hid-keyboard/
