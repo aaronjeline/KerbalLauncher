@@ -9,7 +9,10 @@ const int launchButton = 7;
 const int rcsSwitch = 11;
 boolean doneLaunch;
 int rcsBit;
-
+//Vars for keyboard keys
+const int space = 44;
+const int r = 21;
+const int t = 23;
 void setup()
 {
   //Initialize Serial Communications for the keyboard
@@ -48,7 +51,7 @@ void loop()
    *so check to make sure the button wasn't pressed last loop */
   if(launchState == LOW && doneLaunch == false && keyState == LOW)
   {
-    sendKey(44); //Spacebar 
+    sendKey(space);  
     doneLaunch = true;
   }
   if(launchState == HIGH && doneLaunch == true){
@@ -56,10 +59,10 @@ void loop()
   }  
   
   if(rcsState == LOW && rcsBit == 0){
-    sendKey(23); // r
+    sendKey(r);
     rcsBit = 1;
   }else if(rcsState == HIGH && rcsBit == 1){
-    sendKey(23); //r
+    sendKey(r); 
     rcsBit = 0;
   }
 }
