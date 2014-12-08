@@ -22,7 +22,7 @@ void setup()
   //Setup state
   doneLaunch = false;
   
-  rcsBit = 1;
+  rcsBit = 0;
 }
 
 
@@ -55,12 +55,12 @@ void loop()
     doneLaunch = false;
   }  
   
-  if(rcsState == LOW && rcsBit == 1){
-    sendKey(21); //r
-    rcsBit = 0;
-  }else if (rcsState == HIGH && rcsBit == 0){
-    sendKey(21); //r
+  if(rcsState == LOW && rcsBit == 0){
+    sendKey(23); // r
     rcsBit = 1;
+  }else if(rcsState == HIGH && rcsBit == 1){
+    sendKey(23); //r
+    rcsBit = 0;
   }
 }
 
