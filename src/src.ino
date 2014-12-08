@@ -58,6 +58,7 @@ void loop()
     doneLaunch = false;
   }  
   
+  //Only send the key if the switch state changed this cycle.
   if(rcsState == LOW && rcsBit == 0){
     sendKey(r);
     rcsBit = 1;
